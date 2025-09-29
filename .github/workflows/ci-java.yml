@@ -1,0 +1,40 @@
+name: ci-java
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - platform/api-gateway
+          - services/user-service
+          - services/order-service
+          - services/tracking-service
+          - services/courier-service
+          - services/notification-service
+          - services/payment-service
+          - services/pricing-service
+          - services/scheduling-service
+    defaults:
+      run:
+        working-directory: ${{ matrix.service }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'        # <-- switch to 21
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: m2-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+      - name: Build (skip tests for now)
+        run: mvn -B -q -DskipTests=true package

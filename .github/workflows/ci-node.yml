@@ -1,0 +1,55 @@
+name: ci-node
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        path:
+          - apps/web
+          - services/routing-adapter
+    defaults:
+      run:
+        working-directory: ${{ matrix.path }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'          # ⬅️ removed "cache: npm"
+
+      # Skip cleanly if no package.json in that matrix path
+      - name: Precheck
+        id: pre
+        run: |
+          if [ ! -f package.json ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install deps
+        if: steps.pre.outputs.skip != 'true'
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            echo "No package-lock.json found, using npm install"
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Build
+        if: steps.pre.outputs.skip != 'true'
+        run: npm run build --if-present
+
+      - name: Lint
+        if: steps.pre.outputs.skip != 'true'
+        run: npm run lint --if-present
+
+      - name: Test
+        if: steps.pre.outputs.skip != 'true'
+        run: npm test --if-present
