@@ -1,0 +1,29 @@
+name: ci-node
+on:
+  pull_request:
+    branches: [ main ]
+    paths: ['apps/**','services/routing-adapter/**']
+  push:
+    branches: [ main ]
+    paths: ['apps/**','services/routing-adapter/**']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        path: [apps/web, services/routing-adapter]
+    defaults:
+      run:
+        working-directory: ${{ matrix.path }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run lint --if-present
+      - run: npm test --if-present

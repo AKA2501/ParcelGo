@@ -1,0 +1,30 @@
+name: ci-java
+on:
+  pull_request:
+    branches: [ main ]
+    paths: ['services/**']
+  push:
+    branches: [ main ]
+    paths: ['services/**']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [api-gateway, user-service, order-service, tracking-service]
+    defaults:
+      run:
+        working-directory: services/${{ matrix.service }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: m2-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+      - run: mvn -B -DskipTests=false test
