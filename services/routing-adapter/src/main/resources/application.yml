@@ -1,0 +1,15 @@
+server:
+  port: 8110
+
+spring:
+  webflux:
+    base-path: /
+  main:
+    keep-alive: true
+
+# permissive CORS for dev; tighten later
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

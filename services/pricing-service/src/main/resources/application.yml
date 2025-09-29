@@ -1,0 +1,28 @@
+server:
+  port: {
+    'api-gateway': 8080,
+    'user-service': 8101,
+    'order-service': 8102,
+    'pricing-service': 8103,
+    'scheduling-service': 8104,
+    'courier-service': 8105,
+    'tracking-service': 8106,
+    'notification-service': 8107,
+    'payment-service': 8108,
+    'routing-adapter': 8109
+  }['pricing-service']
+
+spring:
+  application:
+    name: pricing-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8090/realms/parcelgo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

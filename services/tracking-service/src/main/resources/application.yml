@@ -1,0 +1,15 @@
+server:
+  port: 8106
+spring:
+  application:
+    name: tracking-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8090/realms/parcelgo
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
