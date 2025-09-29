@@ -10,6 +10,8 @@
   <artifactId>courier-service</artifactId>
   <name>courier-service</name>
 
+  <!-- CI trigger comment: added for workflow test -->
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>

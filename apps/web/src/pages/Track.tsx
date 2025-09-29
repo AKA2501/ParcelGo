@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import SockJS from 'sockjs-client'
+import * as SockJS from 'sockjs-client';
 import { Client, IMessage } from '@stomp/stompjs'
 
 export default function Track(){
