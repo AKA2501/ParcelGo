@@ -1,11 +1,10 @@
 name: ci-node
+
 on:
   pull_request:
     branches: [ main ]
-    paths: ['apps/**','services/routing-adapter/**']
   push:
     branches: [ main ]
-    paths: ['apps/**','services/routing-adapter/**']
 
 jobs:
   build:
@@ -13,7 +12,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path: [apps/web, services/routing-adapter]
+        path:
+          - apps/web
+          - services/routing-adapter
     defaults:
       run:
         working-directory: ${{ matrix.path }}
@@ -23,7 +24,33 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm run lint --if-present
-      - run: npm test --if-present
+
+      # Skip cleanly if this package doesn't exist yet
+      - name: Precheck
+        id: pre
+        run: |
+          if [ ! -f package.json ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install deps
+        if: steps.pre.outputs.skip != 'true'
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            echo "⚠️  No package-lock.json found, using npm install"
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Build
+        if: steps.pre.outputs.skip != 'true'
+        run: npm run build --if-present
+
+      - name: Lint
+        if: steps.pre.outputs.skip != 'true'
+        run: npm run lint --if-present
+
+      - name: Test
+        if: steps.pre.outputs.skip != 'true'
+        run: npm test --if-present
