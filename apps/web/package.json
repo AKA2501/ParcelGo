@@ -21,10 +21,9 @@
     "@types/leaflet": "^1.9.20",
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
+    "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-react": "^4.7.0",
     "typescript": "^5.9.2",
     "vite": "^5.4.20"
   }
 }
-
-
