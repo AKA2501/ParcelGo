@@ -22,10 +22,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '20'          # ⬅️ removed "cache: npm"
 
-      # Skip cleanly if this package doesn't exist yet
+      # Skip cleanly if no package.json in that matrix path
       - name: Precheck
         id: pre
         run: |
@@ -39,7 +38,7 @@ jobs:
           if [ -f package-lock.json ]; then
             npm ci
           else
-            echo "⚠️  No package-lock.json found, using npm install"
+            echo "No package-lock.json found, using npm install"
             npm install --no-audit --no-fund
           fi
 
