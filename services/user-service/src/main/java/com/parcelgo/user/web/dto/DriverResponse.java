@@ -18,8 +18,8 @@ public class DriverResponse {
 
     // nested DTOs (simple POJOs)
     public static class AddressDto {
-        public String line1, line2, city, state, postalCode, country;
-        public Double latitude, longitude;
+        public String addressLine1, addressLine2, city, state, postalCode, country;
+        public Double lat, lng;
     }
     public static class DayScheduleDto {
         public int day;

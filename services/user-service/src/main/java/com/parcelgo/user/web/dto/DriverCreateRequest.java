@@ -33,25 +33,33 @@ public class DriverCreateRequest {
 
     // nested DTOs
     public static class AddressDto {
-        @Size(max = 120) private String line1;
-        @Size(max = 120) private String line2;
+        @Size(max = 120) private String addressLine1;
+        @Size(max = 120) private String addressLine2;
         @Size(max = 80) private String city;
         @Size(max = 80) private String state;
         @Size(max = 20) private String postalCode;
         @Size(max = 80) private String country;
         @DecimalMin(value = "-90.0", inclusive = true, message = "latitude must be >= -90") @DecimalMax(value = "90.0", inclusive = true, message = "latitude must be <= 90")
-        private Double latitude;
+        private Double lat;
         @DecimalMin(value = "-180.0", inclusive = true, message = "longitude must be >= -180") @DecimalMax(value = "180.0", inclusive = true, message = "longitude must be <= 180")
-        private Double longitude;
+        private Double lng;
 
-        public String getLine1() { return line1; } public void setLine1(String line1) { this.line1 = line1; }
-        public String getLine2() { return line2; } public void setLine2(String line2) { this.line2 = line2; }
-        public String getCity() { return city; } public void setCity(String city) { this.city = city; }
-        public String getState() { return state; } public void setState(String state) { this.state = state; }
-        public String getPostalCode() { return postalCode; } public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
-        public String getCountry() { return country; } public void setCountry(String country) { this.country = country; }
-        public Double getLatitude() { return latitude; } public void setLatitude(Double latitude) { this.latitude = latitude; }
-        public Double getLongitude() { return longitude; } public void setLongitude(Double longitude) { this.longitude = longitude; }
+        public String getAddressLine1() { return addressLine1; }
+        public void setAddressLine1(String addressLine1) { this.addressLine1 = addressLine1; }
+        public String getAddressLine2() { return addressLine2; }
+        public void setAddressLine2(String addressLine2) { this.addressLine2 = addressLine2; }
+        public String getCity() { return city; }
+        public void setCity(String city) { this.city = city; }
+        public String getState() { return state; }
+        public void setState(String state) { this.state = state; }
+        public String getPostalCode() { return postalCode; }
+        public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
+        public String getCountry() { return country; }
+        public void setCountry(String country) { this.country = country; }
+        public Double getLat() { return lat; }
+        public void setLat(Double lat) { this.lat = lat; }
+        public Double getLng() { return lng; }
+        public void setLng(Double lng) { this.lng = lng; }
     }
 
     public static class DayScheduleDto {
@@ -75,7 +83,13 @@ public class DriverCreateRequest {
     public String getPhone() { return phone; } public void setPhone(String phone) { this.phone = phone; }
     public String getVehicleRegistration() { return vehicleRegistration; } public void setVehicleRegistration(String vehicleRegistration) { this.vehicleRegistration = vehicleRegistration; }
     public Integer getMaxWeightKg() { return maxWeightKg; } public void setMaxWeightKg(Integer maxWeightKg) { this.maxWeightKg = maxWeightKg; }
-    public AddressDto getStartAddress() { return startAddress; } public void setStartAddress(AddressDto startAddress) { this.startAddress = startAddress; }
-    public AddressDto getEndAddress() { return endAddress; } public void setEndAddress(AddressDto endAddress) { this.endAddress = endAddress; }
+    public AddressDto getStartAddress() { return startAddress; } 
+    public void setStartAddress(AddressDto startAddress) { 
+        this.startAddress = startAddress; 
+    }
+    public AddressDto getEndAddress() { return endAddress; }
+    public void setEndAddress(AddressDto endAddress) { 
+        this.endAddress = endAddress; 
+    }
     public List<DayScheduleDto> getSchedule() { return schedule; } public void setSchedule(List<DayScheduleDto> schedule) { this.schedule = schedule; }
 }

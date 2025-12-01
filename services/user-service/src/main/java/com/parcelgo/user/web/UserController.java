@@ -4,6 +4,8 @@ import com.parcelgo.user.domain.User;
 import com.parcelgo.user.repo.UserRepo;
 import com.parcelgo.user.web.dto.UserCreateRequest;
 import jakarta.validation.Valid;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@Data
 public class UserController {
-  private final UserRepo repo;
-  public UserController(UserRepo repo) { this.repo = repo; }
+
+    @Autowired
+    private final UserRepo repo;
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)

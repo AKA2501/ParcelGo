@@ -6,11 +6,11 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class AddressComponent {
 
-    @Column(name = "line1")
-    private String line1;
+    @Column(name = "addressLine1")
+    private String addressLine1;
 
-    @Column(name = "line2")
-    private String line2;
+    @Column(name = "addressLine2")
+    private String addressLine2;
 
     @Column(name = "city")
     private String city;
@@ -25,16 +25,16 @@ public class AddressComponent {
     private String country;
 
     @Column(name = "lat")
-    private Double latitude;
+    private Double lat;
 
     @Column(name = "lng")
-    private Double longitude;
+    private Double lng;
 
     // getters/setters
-    public String getLine1() { return line1; }
-    public void setLine1(String line1) { this.line1 = line1; }
-    public String getLine2() { return line2; }
-    public void setLine2(String line2) { this.line2 = line2; }
+    public String getAddressLine1() { return addressLine1; }
+    public void setAddressLine1(String addressLine1) { this.addressLine1 = addressLine1; }
+    public String getAddressLine2() { return addressLine2; }
+    public void setAddressLine2(String addressLine2) { this.addressLine2 = addressLine2; }
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }
     public String getState() { return state; }
@@ -43,8 +43,8 @@ public class AddressComponent {
     public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
     public String getCountry() { return country; }
     public void setCountry(String country) { this.country = country; }
-    public Double getLatitude() { return latitude; }
-    public void setLatitude(Double latitude) { this.latitude = latitude; }
-    public Double getLongitude() { return longitude; }
-    public void setLongitude(Double longitude) { this.longitude = longitude; }
+    public Double getLat() { return lat; }
+    public void setLat(Double lat) { this.lat = lat; }
+    public Double getLng() { return lng; }
+    public void setLng(Double lng) { this.lng = lng; }
 }

@@ -99,14 +99,14 @@ public class DriverService {
     private static AddressComponent toAddress(DriverCreateRequest.AddressDto a) {
         if (a == null) return null;
         AddressComponent c = new AddressComponent();
-        c.setLine1(a.getLine1());
-        c.setLine2(a.getLine2());
+        c.setAddressLine1(a.getAddressLine1());
+        c.setAddressLine2(a.getAddressLine2());
         c.setCity(a.getCity());
         c.setState(a.getState());
         c.setPostalCode(a.getPostalCode());
         c.setCountry(a.getCountry());
-        c.setLatitude(a.getLatitude());
-        c.setLongitude(a.getLongitude());
+        c.setLat(a.getLat());
+        c.setLng(a.getLng());
         return c;
     }
 
@@ -126,27 +126,27 @@ public class DriverService {
 
         DriverResponse.AddressDto sa = new DriverResponse.AddressDto();
         if (d.getStartAddress() != null) {
-            sa.line1 = d.getStartAddress().getLine1();
-            sa.line2 = d.getStartAddress().getLine2();
+            sa.addressLine1 = d.getStartAddress().getAddressLine1();
+            sa.addressLine2 = d.getStartAddress().getAddressLine2();
             sa.city = d.getStartAddress().getCity();
             sa.state = d.getStartAddress().getState();
             sa.postalCode = d.getStartAddress().getPostalCode();
             sa.country = d.getStartAddress().getCountry();
-            sa.latitude = d.getStartAddress().getLatitude();
-            sa.longitude = d.getStartAddress().getLongitude();
+            sa.lat = d.getStartAddress().getLat();
+            sa.lng = d.getStartAddress().getLng();
         }
         out.setStartAddress(sa);
 
         DriverResponse.AddressDto ea = new DriverResponse.AddressDto();
         if (d.getEndAddress() != null) {
-            ea.line1 = d.getEndAddress().getLine1();
-            ea.line2 = d.getEndAddress().getLine2();
+            ea.addressLine1 = d.getEndAddress().getAddressLine1();
+            ea.addressLine2 = d.getEndAddress().getAddressLine2();
             ea.city = d.getEndAddress().getCity();
             ea.state = d.getEndAddress().getState();
             ea.postalCode = d.getEndAddress().getPostalCode();
             ea.country = d.getEndAddress().getCountry();
-            ea.latitude = d.getEndAddress().getLatitude();
-            ea.longitude = d.getEndAddress().getLongitude();
+            ea.lat = d.getEndAddress().getLat();
+            ea.lng = d.getEndAddress().getLng();
         }
         out.setEndAddress(ea);
 
