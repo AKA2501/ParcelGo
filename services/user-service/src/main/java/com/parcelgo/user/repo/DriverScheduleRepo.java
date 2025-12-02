@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DriverScheduleRepo extends JpaRepository<DriverSchedule, Long> {
-    List<DriverSchedule> findByDriverId(Long driverId);
+    DriverSchedule findByDriverId(Long driverId);
     void deleteByDriverId(Long driverId);
 }

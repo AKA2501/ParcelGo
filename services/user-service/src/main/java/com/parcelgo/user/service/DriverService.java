@@ -53,19 +53,16 @@ public class DriverService {
         d = driverRepo.save(d);
 
         // schedule rows
-        List<DriverSchedule> rows = new ArrayList<>();
-       for (var s : req.getSchedule()) {
+       var s = req.getSchedule() ;
   DriverSchedule row = new DriverSchedule();
   row.setDriver(d);
   row.setDayOfWeek(s.getDay());
-  row.setEnabled(s.isEnabled());
   row.setStartTime(parseOrNull(s.getStart()));
   row.setEndTime(parseOrNull(s.getEnd()));
-  rows.add(row);
-}
-        scheduleRepo.saveAll(rows);
 
-        return toResponse(d, rows);
+        scheduleRepo.save(row);
+
+        return toResponse(d, row);
     }
 
     @Transactional(readOnly = true)
@@ -91,7 +88,7 @@ public class DriverService {
     public DriverResponse get(Long id) {
         Driver d = driverRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "driver not found"));
-        List<DriverSchedule> rows = scheduleRepo.findByDriverId(id);
+        DriverSchedule rows = scheduleRepo.findByDriverId(id);
         return toResponse(d, rows);
     }
 
@@ -115,7 +112,7 @@ public class DriverService {
         return LocalTime.parse(t);
     }
 
-    private static DriverResponse toResponse(Driver d, List<DriverSchedule> rows) {
+    private static DriverResponse toResponse(Driver d, DriverSchedule row) {
         DriverResponse out = new DriverResponse();
         out.setId(d.getId());
         out.setName(d.getName());
@@ -150,16 +147,13 @@ public class DriverService {
         }
         out.setEndAddress(ea);
 
-        List<DriverResponse.DayScheduleDto> sched = new ArrayList<>();
-        for (DriverSchedule r : rows) {
+
             DriverResponse.DayScheduleDto ds = new DriverResponse.DayScheduleDto();
-            ds.day = r.getDayOfWeek();
-            ds.enabled = r.isEnabled();
-            ds.start = r.getStartTime() != null ? r.getStartTime().toString() : null;
-            ds.end = r.getEndTime() != null ? r.getEndTime().toString() : null;
-            sched.add(ds);
-        }
-        out.setSchedule(sched);
+            ds.day = row.getDayOfWeek();
+            ds.start = row.getStartTime() != null ? row.getStartTime().toString() : null;
+            ds.end = row.getEndTime() != null ? row.getEndTime().toString() : null;
+
+        out.setSchedule(ds);
         return out;
     }
 }

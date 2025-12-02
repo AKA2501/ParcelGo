@@ -2,10 +2,16 @@ package com.parcelgo.user.web.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Setter
+@Getter
 public class DriverCreateRequest {
 
+    // getters/setters
     @NotBlank @Size(max = 120)
     private String name;
 
@@ -29,9 +35,11 @@ public class DriverCreateRequest {
 
     @NotNull @Size(min = 1, max = 7)
     @Valid
-    private List<DayScheduleDto> schedule;
+    private DayScheduleDto schedule;
 
     // nested DTOs
+    @Setter
+    @Getter
     public static class AddressDto {
         @Size(max = 120) private String addressLine1;
         @Size(max = 120) private String addressLine2;
@@ -44,52 +52,18 @@ public class DriverCreateRequest {
         @DecimalMin(value = "-180.0", inclusive = true, message = "longitude must be >= -180") @DecimalMax(value = "180.0", inclusive = true, message = "longitude must be <= 180")
         private Double lng;
 
-        public String getAddressLine1() { return addressLine1; }
-        public void setAddressLine1(String addressLine1) { this.addressLine1 = addressLine1; }
-        public String getAddressLine2() { return addressLine2; }
-        public void setAddressLine2(String addressLine2) { this.addressLine2 = addressLine2; }
-        public String getCity() { return city; }
-        public void setCity(String city) { this.city = city; }
-        public String getState() { return state; }
-        public void setState(String state) { this.state = state; }
-        public String getPostalCode() { return postalCode; }
-        public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
-        public String getCountry() { return country; }
-        public void setCountry(String country) { this.country = country; }
-        public Double getLat() { return lat; }
-        public void setLat(Double lat) { this.lat = lat; }
-        public Double getLng() { return lng; }
-        public void setLng(Double lng) { this.lng = lng; }
     }
 
+    @Setter
+    @Getter
     public static class DayScheduleDto {
-        @Min(0) @Max(6) private int day;
-        private boolean enabled;
+        @Min(0) @Max(6) private String day;
         // "HH:mm"
         @Pattern(regexp = "^([0-1][0-9]|2[0-3]):[0-5][0-9]$", message="start must be HH:mm")
         private String start;
         @Pattern(regexp = "^([0-1][0-9]|2[0-3]):[0-5][0-9]$", message="end must be HH:mm")
         private String end;
 
-        public int getDay() { return day; } public void setDay(int day) { this.day = day; }
-        public boolean isEnabled() { return enabled; } public void setEnabled(boolean enabled) { this.enabled = enabled; }
-        public String getStart() { return start; } public void setStart(String start) { this.start = start; }
-        public String getEnd() { return end; } public void setEnd(String end) { this.end = end; }
     }
 
-    // getters/setters
-    public String getName() { return name; } public void setName(String name) { this.name = name; }
-    public String getEmail() { return email; } public void setEmail(String email) { this.email = email; }
-    public String getPhone() { return phone; } public void setPhone(String phone) { this.phone = phone; }
-    public String getVehicleRegistration() { return vehicleRegistration; } public void setVehicleRegistration(String vehicleRegistration) { this.vehicleRegistration = vehicleRegistration; }
-    public Integer getMaxWeightKg() { return maxWeightKg; } public void setMaxWeightKg(Integer maxWeightKg) { this.maxWeightKg = maxWeightKg; }
-    public AddressDto getStartAddress() { return startAddress; } 
-    public void setStartAddress(AddressDto startAddress) { 
-        this.startAddress = startAddress; 
-    }
-    public AddressDto getEndAddress() { return endAddress; }
-    public void setEndAddress(AddressDto endAddress) { 
-        this.endAddress = endAddress; 
-    }
-    public List<DayScheduleDto> getSchedule() { return schedule; } public void setSchedule(List<DayScheduleDto> schedule) { this.schedule = schedule; }
 }

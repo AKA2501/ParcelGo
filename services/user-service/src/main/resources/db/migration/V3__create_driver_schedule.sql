@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS driver_schedule (
   id BIGSERIAL PRIMARY KEY,
   driver_id BIGINT NOT NULL REFERENCES drivers(id) ON DELETE CASCADE,
-  day_of_week INTEGER NOT NULL,  -- 0..6
+  day_of_week VARCHAR(20) NOT NULL,  -- 0..6
   enabled BOOLEAN NOT NULL DEFAULT FALSE,
   start_time TIME,
   end_time TIME
